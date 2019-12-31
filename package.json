@@ -1,0 +1,27 @@
+{
+  "name": "kanban",
+  "version": "1.0.0",
+  "description": "KanbanBoard",
+  "main": "app/index.js",
+  "dependencies": {
+    "attract": "^2.0.5",
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "trafico": "^1.0.8"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "grunt": "^1.0.4",
+    "grunt-nodemon": "^0.4.2"
+  },
+  "scripts": {
+    "build": "grunt build",
+    "start": "grunt nodemon",
+    "lint": "grunt lint",
+    "watch": "grunt watch"
+  },
+  "author": "",
+  "license": "ISC"
+}
