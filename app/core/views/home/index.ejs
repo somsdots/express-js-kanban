@@ -1,1 +1,86 @@
-Hi
+<body  class="kt-page--loading-enabled kt-page--loading kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header--minimize-topbar kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-page--loading">
+	<div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
+		<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+			<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+				<div class="kt-container ">
+					<div class="kt-subheader__main">
+						<h3 class="kt-subheader__title">Dashboard</h3>
+						<span class="kt-subheader__separator kt-subheader__separator--v"></span>
+						<a href="javascript:void(0);" class="btn btn-label-primary btn-bold btn-icon-h kt-margin-l-10" id="add_book">
+							Add New Board
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="kt-container  kt-grid__item kt-grid__item--fluid">
+				<div class="kt-portlet">
+											<div class="kt-portlet__head">
+												<div class="kt-portlet__head-label">
+													<h3 class="kt-portlet__head-title">
+														Boards
+													</h3>
+												</div>
+											</div>
+											<div class="kt-portlet__body">
+
+												<!--begin::Section-->
+												<div class="kt-section">
+													<div class="kt-section__content">
+														<div class="table-responsive">
+															<table class="table table-bordered">
+																<thead>
+																	<tr>
+																		<th>#</th>
+																		<th>Title</th>
+																		<th>Description </th>
+																		<th>Action</th>
+																	</tr>
+																</thead>
+																<tbody id="board_table_body">
+																	
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+
+												<!--end::Section-->
+											</div>
+
+											<!--end::Form-->
+										</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="book_modal" tabindex="-1" role="dialog"  aria-modal="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form method="POST" action="" novalidate="novalidate" id="board_form">
+					<input type="hidden" class="form-control" id="board_id">
+					<div class="modal-header">
+						<h5 class="modal-title" >Add Board</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Board Title</label>
+							<input type="text" class="form-control" name="title">
+						</div>
+						<div class="form-group">
+							<label>Board Description</label>
+							<textarea class="form-control" rows="3" name="description"></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button id="board_submit" type="button" class="btn btn-primary">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+

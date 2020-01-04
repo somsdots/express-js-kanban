@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 
 const setDate = (args) => {
-  args.unshift(`[Boilerplate: ${(new Date()).toLocaleString()}]`);
+  args.unshift(`[Kanban: ${(new Date()).toLocaleString()}]`);
   return args;
 };
 

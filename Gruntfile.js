@@ -3,8 +3,6 @@
 require('dotenv').config({path:'.env'});
 const fs = require('fs');
 
-console.log(fs);
-
 module.exports = (grunt) => {
   try {
     const tasks = {};
@@ -17,7 +15,7 @@ module.exports = (grunt) => {
     });
 
     grunt.initConfig(tasks);
-    grunt.registerTask('build');
+    grunt.registerTask('default', ['cssmin', 'uglify']);
   } catch (error) {
     console.error(`I can't load Grunt; ${error.message}`);
   }

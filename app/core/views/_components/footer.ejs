@@ -1,0 +1,210 @@
+<!-- begin::Global Config(global config for global JS sciprts) -->
+<script>
+var KTAppOptions = {
+	"colors": {
+				"state": {
+					"brand": "#374afb",
+					"light": "#ffffff",
+					"dark": "#282a3c",
+					"primary": "#5867dd",
+					"success": "#34bfa3",
+					"info": "#36a3f7",
+					"warning": "#ffb822",
+					"danger": "#fd3995"
+				},
+				"base": {
+					"label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+					"shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+				}
+			}
+		};
+		</script>
+<script src="/plugins/general/sticky-js/dist/sticky.min.js" type="text/javascript"></script>
+<script src="/plugins/general/jquery/dist/jquery.js" type="text/javascript"></script>
+<script src="/plugins/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
+<script src="/plugins/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/plugins/general/jquery-form/dist/jquery.form.min.js" type="text/javascript"></script>
+<script src="/plugins/general/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
+<script src="/plugins/general/toastr/build/toastr.min.js" type="text/javascript"></script>
+<script src="/js/scripts.bundle.js" type="text/javascript"></script>
+<script>
+	$('#add_book').click(function(){
+		var form = $('#board_form');
+		$('#board_id').val('');
+		form[0].reset();
+		form.find('.alert').remove();
+		$('#book_modal').modal('show');
+	});
+
+	var Board = function () {
+
+	var showErrorMsg = function(form, type, msg) {
+        var alert = $('<div class="alert alert-bold alert-solid-' + type + ' alert-dismissible" role="alert">\
+			<div class="alert-text">'+msg+'</div>\
+			<div class="alert-close">\
+                <i class="flaticon2-cross kt-icon-sm" data-dismiss="alert"></i>\
+            </div>\
+		</div>');
+
+        form.find('.alert').remove();
+        alert.prependTo(form);
+        KTUtil.animateClass(alert[0], 'fadeIn animated');
+    }
+
+	// Private Functions
+	var handleFormSubmit = function () {
+		$('#board_submit').click(function (e) {
+			e.preventDefault();
+
+			var btn = $(this);
+			var form = $('#board_form');
+
+			form.validate({
+				rules: {
+					title: {
+						required: true
+					},
+					description: {
+						required: true
+					}
+				}
+			});
+
+			if (!form.valid()) {
+				return;
+			}
+
+			KTApp.progress(btn[0]);
+
+			setTimeout(function () {
+				KTApp.unprogress(btn[0]);
+			}, 2000);
+
+			// ajax form submit:  http://jquery.malsup.com/form/
+			var board_id = $('#board_id').val();
+			var url = (board_id != '') ? '/api/v1/board/' + board_id : '/api/v1/board';
+			var method = (board_id != '') ? 'put' : 'post';
+			form.ajaxSubmit({
+				type: method,
+				url: url,
+				success: function (response, status, xhr, $form) {
+					KTApp.unprogress(btn[0]);
+					toastr['success'](xhr.responseJSON.msg);
+					getBoards();
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+				 	KTApp.unprogress(btn[0]);
+					toastr['error'](xhr.responseJSON.msg);
+				}
+			});
+		});
+	}
+
+	// Public Functions
+	return {
+		// public functions
+		init: function () {
+			handleFormSubmit();
+		}
+	};
+}();
+
+function getBoards(){
+	$.ajax({
+		url: "api/v1/board",
+	    type: 'get',
+	    dataType: "json",
+	    success: function (stat) {
+	    	var tbody = document.getElementById('board_table_body');
+	    	tbody.innerHTML = '';
+	    	for(var key in stat){
+	    		var tr = document.createElement('tr');
+
+	    		var td_key = document.createElement('td');
+	    		td_key.innerHTML = stat[key]['_id'];
+
+	    		var td_title = document.createElement('td');
+	    		td_title.innerHTML = stat[key]['title'];
+
+	    		var td_description = document.createElement('td');
+	    		td_description.innerHTML = stat[key]['description'];
+
+	    		var td_aciton = document.createElement('td');
+ 
+	    		var td_aciton_edit = document.createElement('a');
+	    		td_aciton_edit.className = 'btn btn-sm btn-clean btn-icon btn-icon-md board_edit_btn';
+	    		td_aciton_edit.innerHTML = '<i class="la la-edit"></i>';
+	    		td_aciton_edit.setAttribute('data-item',JSON.stringify(stat[key]));
+	    		td_aciton_edit.setAttribute('style','cursor:pointer;');
+
+	    		var td_aciton_delete = document.createElement('a');
+	    		td_aciton_delete.className = 'btn btn-sm btn-clean btn-icon btn-icon-md board_delete_btn';
+	    		td_aciton_delete.innerHTML = '<i class="la la-trash"></i>';
+	    		td_aciton_delete.setAttribute('data-item',JSON.stringify(stat[key]));
+	    		td_aciton_delete.setAttribute('style','cursor:pointer;');
+	    		
+	    		td_aciton.appendChild(td_aciton_edit);
+	    		td_aciton.appendChild(td_aciton_delete);
+
+	    		tr.appendChild(td_key);
+	    		tr.appendChild(td_title);
+	    		tr.appendChild(td_description);
+	    		tr.appendChild(td_aciton);
+
+	    		tbody.appendChild(tr);
+	    	}
+	    	$('#book_modal').modal('hide');
+	    },
+	    error: function (xhr, ajaxOptions, thrownError) {
+	    	var tbody = document.getElementById('board_table_body');
+	    	tbody.innerHTMl = 'Looks like something went wrong';
+	    }
+	});
+}
+
+function deleteBoard(id){
+	$.ajax({
+		url: "api/v1/board/" + id,
+	    type: 'delete',
+	    dataType: "json",
+	    success: function (stat) {
+	    	toastr['success'](stat.msg);
+	    	getBoards();
+	    },
+	    error: function (xhr, ajaxOptions, thrownError) {
+	    	toastr['error'](xhr.responseJSON.msg);
+	    }
+	});
+}
+
+// Class Initialization
+jQuery(document).ready(function () {
+	
+	//Init Board Form
+	Board.init();
+
+	//Fetch Boards
+	getBoards();
+
+	//Bind Edit
+	$(document).on('click','.board_edit_btn',function(){
+		var item = $(this).attr('data-item');
+		item = JSON.parse(item);
+		var form = $('#board_form');
+		form[0].reset();
+		form.find('.alert').remove();
+		form[0].board_id.value = item._id;
+		form[0].title.value = item.title;
+		form[0].description.value = item.description;
+		$('#book_modal').modal('show');
+	});
+
+	//Bind Delete
+	$(document).on('click','.board_delete_btn',function(){
+		var item = $(this).attr('data-item');
+		item = JSON.parse(item);
+		deleteBoard(item._id);
+	});
+});
+
+</script>

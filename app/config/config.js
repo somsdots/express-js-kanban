@@ -9,8 +9,9 @@ const config = {
       hostname: process.env.HOSTNAME || 'localhost',
     },
     database: {
-      url: '',
+      url: 'mongodb://localhost:27017/kanban',
     },
+    secret: 'kanban'
   },
 
   test: {
@@ -19,8 +20,9 @@ const config = {
       hostname: process.env.HOSTNAME || 'localhost',
     },
     database: {
-      url: '',
+      url: 'mongodb://localhost:27017/kanban',
     },
+    secret: 'kanban'
   },
 
   production: {
@@ -29,8 +31,9 @@ const config = {
       hostname: process.env.HOSTNAME || 'localhost',
     },
     database: {
-      url: '',
+      url: 'mongodb://localhost:27017/kanban',
     },
+    secret: 'kanban'
   },
 };
 
