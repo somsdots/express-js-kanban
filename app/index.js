@@ -53,7 +53,9 @@ app.use('/api/v1', api);
 //Passport JWT TOKEN AUTEHNTICATE MIDDLEWARE FOR WEB Routes
 app.use(function(req, res, next) {
 	passport.authenticate('jwt', { session: false }, function(err, user, info) {
-	    if (err) { return next(err); }
+	    if (err) { 
+	    	return next(err); 
+	    }
 	    if (!user) {
 	    	if(req.path !== '/auth/login' && req.path !== '/auth/register'){ 
 	    		return res.redirect('/auth/login');

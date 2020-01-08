@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "KanbanBoard",
   "main": "app/index.js",
+  "engines": {
+    "node": "8.11.4"
+  },
   "dependencies": {
     "attract": "^2.0.5",
     "bcrypt-nodejs": "0.0.3",
@@ -14,7 +17,9 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "*",
+    "forever": "^2.0.0",
     "fs": "0.0.1-security",
+    "grunt-forever": "^0.4.7",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.4",
@@ -39,7 +44,6 @@
     "grunt-eslint": "*"
   },
   "scripts": {
-    "build": "grunt build",
     "start": "grunt nodemon",
     "lint": "grunt lint",
     "watch": "grunt watch"

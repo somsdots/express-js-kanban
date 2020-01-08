@@ -9,7 +9,7 @@ const config = {
       hostname: process.env.HOSTNAME || 'localhost',
     },
     database: {
-      url: 'mongodb://localhost:27017/kanban',
+      url: 'mongodb+srv://admin:dots@123@cluster0-tgzyp.mongodb.net/test?retryWrites=true&w=majority',
     },
     secret: 'kanban'
   },

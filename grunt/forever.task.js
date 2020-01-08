@@ -1,7 +1,7 @@
 /* eslint no-console: 0 */
 
 module.exports = (grunt, path) => {
-  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-forever');
   return {
     dev: {
       script: `${path}/app/index.js`,
