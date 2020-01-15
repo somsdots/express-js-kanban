@@ -100,7 +100,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 <script>
-var socket = io('http://localhost:9000/');
+var socket = io('https://express-js-kanban.herokuapp.com/');
 	var transactionChart = new FusionCharts({
     		id: "mychart",
 	        type: 'realtimecolumn',
@@ -180,7 +180,7 @@ var socket = io('http://localhost:9000/');
 
 		//On connection with socket, will start receiving the data
 	  	socket.on('news', function (data) {
-	  	
+
 	    	function updateData() {
 	    		//Converting the fetched data in FusionCharts format
 	    		var strData = "&label=" + data.label + "&value=" + data.value;
