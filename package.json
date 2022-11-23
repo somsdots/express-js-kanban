@@ -31,7 +31,7 @@
     "passport-local-mongoose": "^5.0.1",
     "pubnub": "^4.27.3",
     "serve-favicon": "*",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "trafico": "^1.0.8"
   },
   "devDependencies": {
